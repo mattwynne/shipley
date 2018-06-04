@@ -1,0 +1,17 @@
+{
+  "name": "shipley",
+  "version": "1.0.0",
+  "description": "Continous deployment for apps behind firewalls",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit/rest": "^15.8.1",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "ngrok": "^3.0.1",
+  }
+}
