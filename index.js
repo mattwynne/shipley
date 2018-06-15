@@ -1,48 +1,54 @@
-const token = process.env.GITHUB_TOKEN
 const octokit = require('@octokit/rest')()
-octokit.authenticate({
-	type: 'token',
-	token
-})
+const { execSync } = require('child_process')
 
-const bodyParser = require ('body-parser')
+const remote = 'origin'
+const branch = 'master'
+
+const remoteUrl = execSync(`git config --get remote.${remote}.url`).toString()
+const [_, owner, repo] = remoteUrl.match(/:([^/]+)\/(.+)\.git/)
+console.log(owner, repo)
+
+const token = process.env.GITHUB_TOKEN
+octokit.authenticate({ type: 'token', token })
 
 const main = async () => {
+  console.log('Connecting to ngrok...')
+  const url = await require('ngrok').connect(8080)
+  console.log('Connected: ', url)
 
-	console.log('Connecting to ngrok...')
-	const url = await require('ngrok').connect(8080)
-	console.log(url)
+  const bodyParser = require('body-parser')
+  const app = require('express')()
+  app.use(bodyParser.json())
+  app.post('/', req => {
+    console.log('incoming webhook!')
+    console.log(req.body.ref)
+    // TODO: pull to local repo
+    // TODO: run some kind of configurable stop / startup commands?
+  })
 
-	const app = require('express')()
-	app.use(bodyParser.json())
-	app.post('/', (req) => {
-		console.log("incoming webhook!")
-		console.log(req.body)
-		// TODO: pull to local repo
-		// TODO: run some kind of configurable stop / startup commands?
-	})
+  app.listen(8080, () => {
+    console.log('stated web server to listen for incoming hooks')
 
-	app.listen(8080, () => {
-		console.log("stated web server to listen for incoming hooks")
+    console.log('creating hook')
+    const config = {
+      url: url,
+      content_type: 'json'
+    }
+    octokit.repos
+      .createHook({
+        owner,
+        repo,
+        name: 'web',
+        config,
+        events: ['push'],
+        active: true
+      })
+      .then(({ data }) => {
+        console.log('Created webhook:', data.id)
+      })
+  })
 
-		console.log("creating hook")
-		const config = {
-			"url": url,
-			"content_type": "json"
-		}
-		octokit.repos.createHook({
-			owner: 'mattwynne',
-			repo: 'cucumbers-and-raspberries',
-			name: 'web',
-			config,
-			events: ["push"],
-			active: true
-		}).then(data => {
-			console.log("Created webhook:", data)
-		})
-	})
-
-	// TODO: delete hook when stopped
+  // TODO: delete hook when stopped
 }
 
 main()
