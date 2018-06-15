@@ -24,7 +24,7 @@ const main = async () => {
     const ref = req.body.ref
     if (ref && ref === `refs/heads/${branch}`) {
       console.log(`Syncing with git remote ${remote} from ${ref}`)
-      execSync(`git fetch && git reset --hard ${remote} ${branch}`)
+      execSync(`git fetch && git reset --hard ${remote}/${branch}`)
     }
   })
 
