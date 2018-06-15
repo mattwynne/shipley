@@ -21,9 +21,11 @@ const main = async () => {
   app.use(bodyParser.json())
   app.post('/', req => {
     console.log('incoming webhook!')
-    console.log(req.body.ref)
-    // TODO: pull to local repo
-    // TODO: run some kind of configurable stop / startup commands?
+    const ref = req.body.ref
+    if (ref && ref === `refs/heads/${branch}`) {
+      console.log(`Syncing with git remote ${remote} from ${ref}`)
+      execSync(`git fetch && git reset --hard ${remote} ${branch}`)
+    }
   })
 
   app.listen(8080, () => {
