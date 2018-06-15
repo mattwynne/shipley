@@ -1,6 +1,6 @@
 {
   "name": "shipley",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Continous deployment for apps behind firewalls",
   "main": "index.js",
   "scripts": {
@@ -20,5 +20,8 @@
   },
   "devDependencies": {
     "prettier": "^1.13.5"
+  },
+  "bin": {
+    "shipley": "./bin/shipley"
   }
 }
