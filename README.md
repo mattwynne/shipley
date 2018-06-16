@@ -35,4 +35,5 @@ It will automatically sync the `master` branch from the `origin` remote.
 - run startup command on first boot
 - detect current branch, don't just assume master
 - allow configurable remote
+- options for verbose / non-verbose logging
 - tests?!
