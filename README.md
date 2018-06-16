@@ -29,9 +29,10 @@ Start shipley:
 
 It will automatically sync the `master` branch from the `origin` remote.
 
-## TODO
+## TODO
 
 - configure startup command
 - run startup command on first boot
 - detect current branch, don't just assume master
 - allow configurable remote
+- tests?!
