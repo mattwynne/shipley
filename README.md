@@ -23,7 +23,7 @@ Install the package globally:
 
 Set your `GITHUB_TOKEN` environment variable for configuring the webhooks.
 
-Start shipley:
+Start shipley in the directory of the repo you want to sync from GitHub:
 
     shipley
 
