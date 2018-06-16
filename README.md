@@ -11,7 +11,7 @@ Next, we start an express web server listening on the end of that tunnel.
 
 Then we call GitHub's API to create a webhook that will ping the web server when a commit is received.
 
-When shipley stops, the webhook is deleted and the ngrok tunnel is closed.
+When `shipley` stops, the webhook is deleted and the ngrok tunnel is closed.
 
 ## Installation
 
