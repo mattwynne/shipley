@@ -3,7 +3,7 @@ const { execSync, spawn } = require('child_process')
 
 const remote = 'origin'
 const branch = 'master'
-const cmd = 'npm start'
+const cmd = ['npm', ['start']]
 
 const remoteUrl = execSync(`git config --get remote.${remote}.url`).toString()
 const [_, owner, repo] = remoteUrl.match(/:([^/]+)\/(.+)\.git/)
@@ -32,7 +32,7 @@ const main = async () => {
       console.log('Done.')
       console.log('Restarting app')
       if (appProcess) appProcess.kill()
-      appProcess = spawn(cmd)
+      appProcess = spawn(...cmd)
       console('Restarted.')
     }
   })
