@@ -33,7 +33,7 @@ const main = async () => {
       console.log('Restarting app')
       if (appProcess) appProcess.kill()
       appProcess = spawn(...cmd)
-      console('Restarted.')
+      console.log('Restarted.')
     }
   })
 
