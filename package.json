@@ -1,6 +1,6 @@
 {
   "name": "shipley",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "Continous deployment for apps behind firewalls",
   "main": "index.js",
   "scripts": {
