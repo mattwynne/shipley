@@ -6,7 +6,7 @@ const branch = 'master'
 const cmd = ['npm', ['start']]
 
 const remoteUrl = execSync(`git config --get remote.${remote}.url`).toString()
-const [_, owner, repo] = remoteUrl.match(/:([^/]+)\/(.+)\.git/)
+const [_, owner, repo] = remoteUrl.match(/github.com.([^/]+)\/(.+)\.git/)
 console.log(`Syncing GitHub repo ${owner}/${repo} => ${process.cwd()}`)
 
 const token = process.env.GITHUB_TOKEN
