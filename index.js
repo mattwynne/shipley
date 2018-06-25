@@ -12,7 +12,7 @@ console.log(`Syncing GitHub repo ${owner}/${repo} => ${process.cwd()}`)
 const token = process.env.GITHUB_TOKEN
 octokit.authenticate({ type: 'token', token })
 
-let appProcess
+const appProcess = null
 
 const main = async () => {
   console.log('Connecting to ngrok...')
@@ -30,7 +30,8 @@ const main = async () => {
       )
       execSync(`git fetch && git reset --hard ${remote}/${branch}`)
       console.log('Done.')
-      console.log('Restarting app')
+
+      console.log('Restarting app...')
       if (appProcess) appProcess.kill()
       appProcess = spawn(...cmd)
       console.log('Restarted.')
@@ -40,7 +41,7 @@ const main = async () => {
   app.listen(8080, () => {
     console.log('Started web server to listen for incoming hooks')
 
-    console.log('Creating webhook')
+    console.log('Creating webhook...')
     const config = {
       url,
       content_type: 'json'
@@ -67,7 +68,7 @@ const main = async () => {
       })
   })
 
-  // TODO: delete hook when stopped
+  appProcess = spawn(...cmd)
 }
 
 main()
