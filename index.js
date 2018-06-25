@@ -14,7 +14,7 @@ octokit.authenticate({ type: 'token', token })
 
 let appProcess = null
 
-const startApp() => {
+const startApp = () => {
   appProcess = spawn(...cmd)
   appProcess.stdout.pipe(process.stdout)
   appProcess.stderr.pipe(process.stderr)
