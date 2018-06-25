@@ -65,12 +65,12 @@ const main = async () => {
           })
         })
         console.log('Created webhook:', id)
+
+        console.log('Starting app...')
+        appProcess = spawn(...cmd)
+        console.log('Started.')
       })
   })
-
-  console.log('Starting app...')
-  appProcess = spawn(...cmd)
-  console.log('Started.')
 }
 
 main()
