@@ -12,7 +12,7 @@ console.log(`Syncing GitHub repo ${owner}/${repo} => ${process.cwd()}`)
 const token = process.env.GITHUB_TOKEN
 octokit.authenticate({ type: 'token', token })
 
-const appProcess = null
+let appProcess = null
 
 const main = async () => {
   console.log('Connecting to ngrok...')
@@ -68,7 +68,9 @@ const main = async () => {
       })
   })
 
+  console.log('Starting app...')
   appProcess = spawn(...cmd)
+  console.log('Started.')
 }
 
 main()
