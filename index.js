@@ -14,6 +14,12 @@ octokit.authenticate({ type: 'token', token })
 
 let appProcess = null
 
+const startApp() => {
+  appProcess = spawn(...cmd)
+  appProcess.stdout.pipe(process.stdout)
+  appProcess.stderr.pipe(process.stderr)
+}
+
 const main = async () => {
   console.log('Connecting to ngrok...')
   const url = await require('ngrok').connect(8080)
@@ -33,7 +39,7 @@ const main = async () => {
 
       console.log('Restarting app...')
       if (appProcess) appProcess.kill()
-      appProcess = spawn(...cmd)
+      startApp()
       console.log('Restarted.')
     }
   })
@@ -67,7 +73,7 @@ const main = async () => {
         console.log('Created webhook:', id)
 
         console.log('Starting app...')
-        appProcess = spawn(...cmd)
+        startApp()
         console.log('Started.')
       })
   })
