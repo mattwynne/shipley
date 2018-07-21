@@ -3,11 +3,10 @@ const { execSync, spawn } = require('child_process')
 
 const remote = 'origin'
 const branch = 'master'
-const cmd = ['npm', ['start']]
+const cmd = 'npm start'
 
 const remoteUrl = execSync(`git config --get remote.${remote}.url`).toString()
 const [_, owner, repo] = remoteUrl.match(/github.com.([^/]+)\/(.+)\.git/)
-console.log(`Syncing GitHub repo ${owner}/${repo} => ${process.cwd()}`)
 
 const token = process.env.GITHUB_TOKEN
 octokit.authenticate({ type: 'token', token })
@@ -15,12 +14,18 @@ octokit.authenticate({ type: 'token', token })
 let appProcess = null
 
 const startApp = () => {
-  appProcess = spawn(...cmd)
+  appProcess = spawn('/bin/sh', ['-c', cmd])
   appProcess.stdout.pipe(process.stdout)
   appProcess.stderr.pipe(process.stderr)
 }
 
 const main = async () => {
+  console.log(`Syncing GitHub repo ${owner}/${repo} => ${process.cwd()}`)
+
+  console.log('Starting app...')
+  startApp()
+  console.log('Started.')
+
   console.log('Connecting to ngrok...')
   const url = await require('ngrok').connect(8080)
   console.log('Connected: ', url)
@@ -71,10 +76,6 @@ const main = async () => {
           })
         })
         console.log('Created webhook:', id)
-
-        console.log('Starting app...')
-        startApp()
-        console.log('Started.')
       })
   })
 }
