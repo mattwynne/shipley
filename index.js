@@ -3,7 +3,7 @@ const { execSync, spawn } = require('child_process')
 
 const remote = 'origin'
 const branch = 'master'
-const cmd = 'npm start'
+const cmd = 'npm install && npm start'
 
 const remoteUrl = execSync(`git config --get remote.${remote}.url`).toString()
 const [_, owner, repo] = remoteUrl.match(/github.com.([^/]+)\/(.+)\.git/)
