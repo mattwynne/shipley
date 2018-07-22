@@ -14,9 +14,7 @@ octokit.authenticate({ type: 'token', token })
 let appProcess = null
 
 const startApp = () => {
-  appProcess = spawn('/bin/sh', ['-c', cmd])
-  appProcess.stdout.pipe(process.stdout)
-  appProcess.stderr.pipe(process.stderr)
+  appProcess = spawn('/bin/sh', ['-c', cmd], { stdio: 'inherit' })
 }
 
 const main = async () => {
